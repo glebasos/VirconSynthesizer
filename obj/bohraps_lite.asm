@@ -71,8 +71,8 @@
   %define global_inv127 33428
   %define global_hud_title 33429
   %define global_hud_sub 33453
-  %define global_hud_keys 33493
-  %define global_hud_pause 33533
+  %define global_hud_keys 33477
+  %define global_hud_pause 33509
 
 __global_scope_initialization:
   push BP
@@ -59540,19 +59540,19 @@ __global_scope_initialization:
   mov R0, 0
   mov [32982], R0
   mov DR, global_hud_title
-  mov SR, __literal_string_35512
+  mov SR, __literal_string_35214
   mov CR, 18
   movs
   mov DR, global_hud_sub
-  mov SR, __literal_string_35516
-  mov CR, 38
+  mov SR, __literal_string_35218
+  mov CR, 22
   movs
   mov DR, global_hud_keys
-  mov SR, __literal_string_35520
+  mov SR, __literal_string_35222
   mov CR, 27
   movs
   mov DR, global_hud_pause
-  mov SR, __literal_string_35524
+  mov SR, __literal_string_35226
   mov CR, 13
   movs
   mov SP, BP
@@ -59979,79 +59979,6 @@ __function_draw_horizontal_line:
   mov [SP+1], R1
   call __function_draw_region_zoomed_at
 __function_draw_horizontal_line_return:
-  mov SP, BP
-  pop BP
-  ret
-
-__function_draw_line:
-  push BP
-  mov BP, SP
-  isub SP, 6
-  out GPU_SelectedTexture, -1
-  out GPU_SelectedRegion, 256
-__if_840_start:
-  mov R0, [BP+2]
-  mov R1, [BP+4]
-  ieq R0, R1
-  jf R0, __LogicalAnd_ShortCircuit_845
-  mov R1, [BP+3]
-  mov R2, [BP+5]
-  ieq R1, R2
-  and R0, R1
-__LogicalAnd_ShortCircuit_845:
-  jf R0, __if_840_end
-  mov R1, [BP+2]
-  mov [SP], R1
-  mov R1, [BP+3]
-  mov [SP+1], R1
-  call __function_draw_region_at
-  jmp __function_draw_line_return
-__if_840_end:
-  mov R0, [BP+4]
-  mov R1, [BP+2]
-  isub R0, R1
-  mov [BP-1], R0
-  mov R0, [BP+5]
-  mov R1, [BP+3]
-  isub R0, R1
-  mov [BP-2], R0
-  mov R2, [BP-1]
-  mov R3, [BP-1]
-  imul R2, R3
-  mov R3, [BP-2]
-  mov R4, [BP-2]
-  imul R3, R4
-  iadd R2, R3
-  cif R2
-  mov [SP], R2
-  call __function_sqrt
-  mov R1, R0
-  fadd R1, 1.000000
-  mov R0, R1
-  mov [BP-3], R0
-  mov R1, [BP-2]
-  cif R1
-  mov [SP], R1
-  mov R1, [BP-1]
-  cif R1
-  mov [SP+1], R1
-  call __function_atan2
-  mov [BP-4], R0
-  mov R1, [BP-4]
-  mov [SP], R1
-  call __function_set_drawing_angle
-  mov R1, [BP-3]
-  mov [SP], R1
-  mov R1, 1
-  cif R1
-  mov [SP+1], R1
-  call __function_set_drawing_scale
-  mov R1, [BP+2]
-  mov [SP], R1
-  mov R1, [BP+3]
-  mov [SP+1], R1
-  call __function_draw_region_rotozoomed_at
-__function_draw_line_return:
   mov SP, BP
   pop BP
   ret
@@ -63514,350 +63441,53 @@ __function_restart_song_return:
   pop BP
   ret
 
-__function_wave_shape:
-  push BP
-  mov BP, SP
-  isub SP, 2
-  push R1
-  push R2
-  push R3
-  isub SP, 1
-  mov R1, [BP+3]
-  mov R3, [BP+3]
-  mov [SP], R3
-  call __function_floor
-  mov R2, R0
-  fsub R1, R2
-  mov R0, R1
-  mov [BP-1], R0
-__if_35144_start:
-  mov R0, [BP+2]
-  ieq R0, 0
-  jf R0, __if_35144_end
-  mov R1, [BP-1]
-  fmul R1, 6.283185
-  mov [SP], R1
-  call __function_sin
-  jmp __function_wave_shape_return
-__if_35144_end:
-__if_35153_start:
-  mov R0, [BP+2]
-  ieq R0, 1
-  jf R0, __if_35153_end
-  mov R2, [BP-1]
-  fsub R2, 0.500000
-  mov [SP], R2
-  call __function_fabs
-  mov R1, R0
-  fmul R1, 4.000000
-  fsub R1, 1.000000
-  mov R0, R1
-  jmp __function_wave_shape_return
-__if_35153_end:
-__if_35166_start:
-  mov R0, [BP+2]
-  ieq R0, 2
-  jf R0, __if_35166_end
-  mov R0, [BP-1]
-  fmul R0, 2.000000
-  fsub R0, 1.000000
-  jmp __function_wave_shape_return
-__if_35166_end:
-__if_35176_start:
-  mov R0, [BP+2]
-  ieq R0, 3
-  jf R0, __if_35176_end
-__if_35181_start:
-  mov R0, [BP-1]
-  flt R0, 0.500000
-  jf R0, __if_35181_end
-  mov R0, 1.000000
-  jmp __function_wave_shape_return
-__if_35181_end:
-  mov R0, -1.000000
-  jmp __function_wave_shape_return
-__if_35176_end:
-__if_35190_start:
-  mov R0, [BP+2]
-  ieq R0, 4
-  jf R0, __if_35190_end
-__if_35195_start:
-  mov R0, [BP-1]
-  flt R0, 0.250000
-  jf R0, __if_35195_end
-  mov R0, 1.000000
-  jmp __function_wave_shape_return
-__if_35195_end:
-  mov R0, -1.000000
-  jmp __function_wave_shape_return
-__if_35190_end:
-__if_35204_start:
-  mov R0, [BP+2]
-  ieq R0, 5
-  jf R0, __if_35204_end
-__if_35209_start:
-  mov R0, [BP-1]
-  flt R0, 0.125000
-  jf R0, __if_35209_end
-  mov R0, 1.000000
-  jmp __function_wave_shape_return
-__if_35209_end:
-  mov R0, -1.000000
-  jmp __function_wave_shape_return
-__if_35204_end:
-  mov R2, [BP-1]
-  fmul R2, 127.099998
-  mov R3, [BP+3]
-  fmul R3, 13.000000
-  fadd R2, R3
-  mov [SP], R2
-  call __function_sin
-  mov R1, R0
-  fmul R1, 43758.500000
-  mov R0, R1
-  mov [BP-2], R0
-  mov R1, [BP-2]
-  mov R3, [BP-2]
-  mov [SP], R3
-  call __function_floor
-  mov R2, R0
-  fsub R1, R2
-  fmul R1, 2.000000
-  fsub R1, 1.000000
-  mov R0, R1
-__function_wave_shape_return:
-  iadd SP, 1
-  pop R3
-  pop R2
-  pop R1
-  mov SP, BP
-  pop BP
-  ret
-
-__function_draw_scope:
-  push BP
-  mov BP, SP
-  isub SP, 18
-  mov R1, -14670804
-  mov [SP], R1
-  call __function_set_multiply_color
-  mov R1, 20
-  mov [SP], R1
-  mov R1, 74
-  mov [SP+1], R1
-  mov R1, 620
-  mov [SP+2], R1
-  mov R1, 226
-  mov [SP+3], R1
-  call __function_draw_filled_rectangle
-  mov R1, -14665688
-  mov [SP], R1
-  call __function_set_multiply_color
-  mov R1, 24
-  mov [SP], R1
-  mov R1, 150
-  mov [SP+1], R1
-  mov R1, 616
-  mov [SP+2], R1
-  call __function_draw_horizontal_line
-  mov R0, 0.020000
-  mov [BP-1], R0
-  mov R0, [global_play_frame]
-  cif R0
-  mov R1, [BP-1]
-  fmul R0, R1
-  mov [BP-2], R0
-  mov R0, 4.000000
-  mov [BP-3], R0
-  mov R0, 24
-  mov [BP-4], R0
-  mov R0, 150
-  mov [BP-5], R0
-  mov R0, 0
-  mov [BP-6], R0
-  mov R1, -16711936
-  mov [SP], R1
-  call __function_set_multiply_color
-  mov R0, 0
-  mov [BP-7], R0
-__for_35294_start:
-  mov R0, [BP-7]
-  ile R0, 148
-  jf R0, __for_35294_end
-  mov R0, [BP-7]
-  cif R0
-  fdiv R0, 148.000000
-  mov [BP-8], R0
-  mov R0, [BP-2]
-  mov R1, [BP-8]
-  mov R2, [BP-1]
-  fmul R1, R2
-  fadd R0, R1
-  mov [BP-9], R0
-  mov R0, 0.000000
-  mov [BP-10], R0
-  mov R0, 0
-  mov [BP-13], R0
-__for_35320_start:
-  mov R0, [BP-13]
-  ilt R0, 16
-  jf R0, __for_35320_end
-__if_35330_start:
-  mov R0, global_synth_v_active
-  mov R1, [BP-13]
-  iadd R0, R1
-  mov R0, [R0]
-  bnot R0
-  jf R0, __if_35330_end
-  jmp __for_35320_continue
-__if_35330_end:
-__if_35336_start:
-  mov R0, global_synth_v_amp
-  mov R1, [BP-13]
-  iadd R0, R1
-  mov R0, [R0]
-  fle R0, 0.000000
-  jf R0, __if_35336_end
-  jmp __for_35320_continue
-__if_35336_end:
-  mov R0, global_synth_v_freq
-  mov R1, [BP-13]
-  iadd R0, R1
-  mov R0, [R0]
-  mov R1, [BP-9]
-  fmul R0, R1
-  mov [BP-14], R0
-  mov R1, [BP-10]
-  mov R2, global_synth_v_amp
-  mov R3, [BP-13]
-  iadd R2, R3
-  mov R2, [R2]
-  mov R5, global_synth_v_inst
-  mov R6, [BP-13]
-  iadd R5, R6
-  mov R5, [R5]
-  mov R4, [R5]
-  mov [SP], R4
-  mov R4, [BP-14]
-  mov [SP+1], R4
-  call __function_wave_shape
-  mov R3, R0
-  fmul R2, R3
-  fadd R1, R2
-  mov [BP-10], R1
-  mov R0, R1
-__for_35320_continue:
-  mov R0, [BP-13]
-  iadd R0, 1
-  mov [BP-13], R0
-  jmp __for_35320_start
-__for_35320_end:
-  mov R0, [BP-10]
-  fmul R0, 70.000000
-  fmul R0, 1.400000
-  cfi R0
-  isgn R0
-  iadd R0, 150
-  mov [BP-11], R0
-__if_35373_start:
-  mov R0, [BP-11]
-  ilt R0, 80
-  jf R0, __if_35373_end
-  mov R0, 80
-  mov [BP-11], R0
-__if_35373_end:
-__if_35384_start:
-  mov R0, [BP-11]
-  igt R0, 220
-  jf R0, __if_35384_end
-  mov R0, 220
-  mov [BP-11], R0
-__if_35384_end:
-  mov R0, [BP-7]
-  cif R0
-  mov R1, [BP-3]
-  fmul R0, R1
-  cfi R0
-  iadd R0, 24
-  mov [BP-12], R0
-__if_35404_start:
-  mov R0, [BP-6]
-  cib R0
-  jf R0, __if_35404_end
-  mov R1, [BP-4]
-  mov [SP], R1
-  mov R1, [BP-5]
-  mov [SP+1], R1
-  mov R1, [BP-12]
-  mov [SP+2], R1
-  mov R1, [BP-11]
-  mov [SP+3], R1
-  call __function_draw_line
-__if_35404_end:
-  mov R0, [BP-12]
-  mov [BP-4], R0
-  mov R0, [BP-11]
-  mov [BP-5], R0
-  mov R0, 1
-  mov [BP-6], R0
-__for_35294_continue:
-  mov R0, [BP-7]
-  iadd R0, 1
-  mov [BP-7], R0
-  jmp __for_35294_start
-__for_35294_end:
-__function_draw_scope_return:
-  mov SP, BP
-  pop BP
-  ret
-
 __function_phase_color:
   push BP
   mov BP, SP
-__if_35422_start:
+__if_35137_start:
   mov R0, [BP+2]
   ieq R0, 1
-  jf R0, __if_35422_end
+  jf R0, __if_35137_end
   mov R0, -16711936
   jmp __function_phase_color_return
-__if_35422_end:
-__if_35428_start:
+__if_35137_end:
+__if_35143_start:
   mov R0, [BP+2]
   ieq R0, 3
-  jf R0, __if_35428_end
+  jf R0, __if_35143_end
   mov R0, -256
   jmp __function_phase_color_return
-__if_35428_end:
-__if_35434_start:
+__if_35143_end:
+__if_35149_start:
   mov R0, [BP+2]
   ieq R0, 4
-  jf R0, __if_35434_end
+  jf R0, __if_35149_end
   mov R0, -12533505
   jmp __function_phase_color_return
-__if_35434_end:
-__if_35440_start:
+__if_35149_end:
+__if_35155_start:
   mov R0, [BP+2]
   ieq R0, 5
-  jf R0, __if_35440_end
+  jf R0, __if_35155_end
   mov R0, -16744193
   jmp __function_phase_color_return
-__if_35440_end:
+__if_35155_end:
   mov R0, -13619152
 __function_phase_color_return:
   mov SP, BP
   pop BP
   ret
 
-__function_draw_meters:
+__function_draw_voice_blocks:
   push BP
   mov BP, SP
-  isub SP, 9
+  isub SP, 8
   mov R0, 0
   mov [BP-1], R0
-__for_35449_start:
+__for_35164_start:
   mov R0, [BP-1]
   ilt R0, 16
-  jf R0, __for_35449_end
+  jf R0, __for_35164_end
   mov R0, [BP-1]
   imul R0, 36
   iadd R0, 40
@@ -63865,32 +63495,15 @@ __for_35449_start:
   mov R0, [BP-2]
   iadd R0, 30
   mov [BP-3], R0
-  mov R1, -15198184
-  mov [SP], R1
-  call __function_set_multiply_color
-  mov R1, [BP-2]
-  mov [SP], R1
-  mov R1, 250
-  mov [SP+1], R1
-  mov R1, [BP-3]
-  mov [SP+2], R1
-  mov R1, 320
-  mov [SP+3], R1
-  call __function_draw_filled_rectangle
-__if_35483_start:
+  mov R0, -15198184
+  mov [BP-4], R0
+__if_35192_start:
   mov R0, global_synth_v_active
   mov R1, [BP-1]
   iadd R0, R1
   mov R0, [R0]
   cib R0
-  jf R0, __if_35483_end
-  mov R0, global_synth_v_level
-  mov R1, [BP-1]
-  iadd R0, R1
-  mov R0, [R0]
-  fmul R0, 70.000000
-  cfi R0
-  mov [BP-4], R0
+  jf R0, __if_35192_end
   mov R2, global_synth_v_phase
   mov R3, [BP-1]
   iadd R2, R3
@@ -63898,29 +63511,28 @@ __if_35483_start:
   mov [SP], R2
   call __function_phase_color
   mov R1, R0
-  mov [BP-5], R1
-  mov R1, [BP-5]
+  mov [BP-4], R1
+  mov R0, R1
+__if_35192_end:
+  mov R1, [BP-4]
   mov [SP], R1
   call __function_set_multiply_color
   mov R1, [BP-2]
   mov [SP], R1
-  mov R1, [BP-4]
-  isgn R1
-  iadd R1, 320
+  mov R1, 180
   mov [SP+1], R1
   mov R1, [BP-3]
   mov [SP+2], R1
-  mov R1, 320
+  mov R1, 220
   mov [SP+3], R1
   call __function_draw_filled_rectangle
-__if_35483_end:
-__for_35449_continue:
+__for_35164_continue:
   mov R0, [BP-1]
   iadd R0, 1
   mov [BP-1], R0
-  jmp __for_35449_start
-__for_35449_end:
-__function_draw_meters_return:
+  jmp __for_35164_start
+__for_35164_end:
+__function_draw_voice_blocks_return:
   mov SP, BP
   pop BP
   ret
@@ -63928,58 +63540,45 @@ __function_draw_meters_return:
 __function_draw_progress:
   push BP
   mov BP, SP
-  isub SP, 9
-  mov R0, 24
-  mov [BP-1], R0
-  mov R0, 616
-  mov [BP-2], R0
-  mov R0, 340
-  mov [BP-3], R0
+  isub SP, 6
   mov R1, -13619152
   mov [SP], R1
   call __function_set_multiply_color
-  mov R1, [BP-1]
+  mov R1, 24
   mov [SP], R1
-  mov R1, [BP-3]
+  mov R1, 280
   mov [SP+1], R1
-  mov R1, [BP-2]
+  mov R1, 616
   mov [SP+2], R1
-  mov R1, [BP-3]
-  iadd R1, 8
+  mov R1, 288
   mov [SP+3], R1
   call __function_draw_filled_rectangle
   mov R0, [global_play_frame]
   cif R0
   fdiv R0, 19733.000000
-  mov [BP-4], R0
-__if_35551_start:
-  mov R0, [BP-4]
-  fgt R0, 1.000000
-  jf R0, __if_35551_end
-  mov R0, 1.000000
-  mov [BP-4], R0
-__if_35551_end:
+  mov [BP-1], R0
+__if_35242_start:
   mov R0, [BP-1]
-  mov R1, [BP-4]
-  mov R2, [BP-2]
-  mov R3, [BP-1]
-  isub R2, R3
-  cif R2
-  fmul R1, R2
-  cfi R1
-  iadd R0, R1
-  mov [BP-5], R0
+  fgt R0, 1.000000
+  jf R0, __if_35242_end
+  mov R0, 1.000000
+  mov [BP-1], R0
+__if_35242_end:
+  mov R0, [BP-1]
+  fmul R0, 592.000000
+  cfi R0
+  iadd R0, 24
+  mov [BP-2], R0
   mov R1, -16711681
   mov [SP], R1
   call __function_set_multiply_color
-  mov R1, [BP-1]
+  mov R1, 24
   mov [SP], R1
-  mov R1, [BP-3]
+  mov R1, 280
   mov [SP+1], R1
-  mov R1, [BP-5]
+  mov R1, [BP-2]
   mov [SP+2], R1
-  mov R1, [BP-3]
-  iadd R1, 8
+  mov R1, 288
   mov [SP+3], R1
   call __function_draw_filled_rectangle
 __function_draw_progress_return:
@@ -63996,7 +63595,7 @@ __function_draw_hud:
   call __function_set_multiply_color
   mov R1, 24
   mov [SP], R1
-  mov R1, 12
+  mov R1, 40
   mov [SP+1], R1
   mov R1, global_hud_title
   mov [SP+2], R1
@@ -64006,7 +63605,7 @@ __function_draw_hud:
   call __function_set_multiply_color
   mov R1, 24
   mov [SP], R1
-  mov R1, 40
+  mov R1, 68
   mov [SP+1], R1
   mov R1, global_hud_sub
   mov [SP+2], R1
@@ -64014,28 +63613,28 @@ __function_draw_hud:
   mov R1, -9408400
   mov [SP], R1
   call __function_set_multiply_color
-  mov R1, 360
+  mov R1, 24
   mov [SP], R1
-  mov R1, 12
+  mov R1, 300
   mov [SP+1], R1
   mov R1, global_hud_keys
   mov [SP+2], R1
   call __function_print_at
-__if_35598_start:
+__if_35284_start:
   mov R0, [global_paused]
   cib R0
-  jf R0, __if_35598_end
+  jf R0, __if_35284_end
   mov R1, -16744193
   mov [SP], R1
   call __function_set_multiply_color
-  mov R1, 270
+  mov R1, 300
   mov [SP], R1
-  mov R1, 175
+  mov R1, 120
   mov [SP+1], R1
   mov R1, global_hud_pause
   mov [SP+2], R1
   call __function_print_at
-__if_35598_end:
+__if_35284_end:
 __function_draw_hud_return:
   mov SP, BP
   pop BP
@@ -64050,35 +63649,35 @@ __function_handle_input:
   call __function_select_gamepad
   call __function_gamepad_button_start
   mov [BP-1], R0
-__if_35613_start:
+__if_35299_start:
   mov R0, [BP-1]
   igt R0, 0
-  jf R0, __LogicalAnd_ShortCircuit_35618
+  jf R0, __LogicalAnd_ShortCircuit_35304
   mov R1, [global_start_prev]
   ile R1, 0
   and R0, R1
-__LogicalAnd_ShortCircuit_35618:
-  jf R0, __if_35613_end
+__LogicalAnd_ShortCircuit_35304:
+  jf R0, __if_35299_end
   mov R0, [global_paused]
   isgn R0
   iadd R0, 1
   mov [global_paused], R0
-__if_35613_end:
+__if_35299_end:
   mov R0, [BP-1]
   mov [global_start_prev], R0
   call __function_gamepad_down
   mov [BP-2], R0
-__if_35632_start:
+__if_35318_start:
   mov R0, [BP-2]
   igt R0, 0
-  jf R0, __LogicalAnd_ShortCircuit_35637
+  jf R0, __LogicalAnd_ShortCircuit_35323
   mov R1, [global_down_prev]
   ile R1, 0
   and R0, R1
-__LogicalAnd_ShortCircuit_35637:
-  jf R0, __if_35632_end
+__LogicalAnd_ShortCircuit_35323:
+  jf R0, __if_35318_end
   call __function_restart_song
-__if_35632_end:
+__if_35318_end:
   mov R0, [BP-2]
   mov [global_down_prev], R0
 __function_handle_input_return:
@@ -64109,45 +63708,44 @@ __function_main:
   mov [global_start_prev], R0
   mov R0, 0
   mov [global_down_prev], R0
-__while_35670_start:
-__while_35670_continue:
+__while_35356_start:
+__while_35356_continue:
   mov R0, 1
-  jf R0, __while_35670_end
+  jf R0, __while_35356_end
   call __function_handle_input
-__if_35674_start:
+__if_35360_start:
   mov R0, [global_paused]
   bnot R0
-  jf R0, __if_35674_else
+  jf R0, __if_35360_else
   call __function_fire_due_events
   call __function_synth_update
   mov R0, [global_play_frame]
   iadd R0, 1
   mov [global_play_frame], R0
-__if_35683_start:
+__if_35369_start:
   mov R0, [global_ev_index]
   ige R0, 5921
-  jf R0, __LogicalAnd_ShortCircuit_35688
+  jf R0, __LogicalAnd_ShortCircuit_35374
   mov R1, [global_play_frame]
   ige R1, 19733
   and R0, R1
-__LogicalAnd_ShortCircuit_35688:
-  jf R0, __if_35683_end
+__LogicalAnd_ShortCircuit_35374:
+  jf R0, __if_35369_end
   call __function_restart_song
-__if_35683_end:
-  jmp __if_35674_end
-__if_35674_else:
+__if_35369_end:
+  jmp __if_35360_end
+__if_35360_else:
   call __function_synth_update
-__if_35674_end:
+__if_35360_end:
   mov R1, -15987182
   mov [SP], R1
   call __function_clear_screen
-  call __function_draw_scope
-  call __function_draw_meters
+  call __function_draw_voice_blocks
   call __function_draw_progress
   call __function_draw_hud
   call __function_end_frame
-  jmp __while_35670_start
-__while_35670_end:
+  jmp __while_35356_start
+__while_35356_end:
 __function_main_return:
   mov SP, BP
   pop BP
@@ -64233,11 +63831,11 @@ __literal_string_3837:
   string "ECHO PLUCK"
 __literal_string_3838:
   string "PWM LEAD"
-__literal_string_35512:
+__literal_string_35214:
   string "BOHEMIAN RHAPSODY"
-__literal_string_35516:
-  string "Vircon32 chip-synth cover  -  synth.h"
-__literal_string_35520:
+__literal_string_35218:
+  string "minimal-visuals build"
+__literal_string_35222:
   string "START pause   DOWN restart"
-__literal_string_35524:
+__literal_string_35226:
   string "-- PAUSED --"

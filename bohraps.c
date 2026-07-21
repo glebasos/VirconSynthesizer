@@ -55,8 +55,9 @@ void setup_band()
 {
     Instrument* p;
 
-    // main line (channel 0, ~1919 notes) -- a bright pulse lead that cuts through
-    p = &band[ I_LEAD ];    synth_patch( p, WAVE_PULSE25, 0.20, 1, 8, 0.60, 8 );
+    // main line (channel 0, ~1919 notes) -- a bright pulse lead that cuts through.
+    // Louder than the rest so the "vocal" melody sits out front.
+    p = &band[ I_LEAD ];    synth_patch( p, WAVE_PULSE25, 0.31, 1, 8, 0.60, 8 );
     synth_set_vibrato( p, 0.18, 6.0, 16 );
 
     // bass -- saw with a short glide so runs slur a little
@@ -64,11 +65,11 @@ void setup_band()
     synth_set_glide( p, 2 );
 
     // strings -- slow saw pad
-    p = &band[ I_STRINGS ]; synth_patch( p, WAVE_SAW, 0.13, 12, 22, 0.80, 26 );
+    p = &band[ I_STRINGS ]; synth_patch( p, WAVE_SAW, 0.11, 12, 22, 0.80, 26 );
     synth_set_vibrato( p, 0.16, 4.5, 24 );
 
     // choir -- soft triangle pad
-    p = &band[ I_CHOIR ];   synth_patch( p, WAVE_TRIANGLE, 0.13, 16, 20, 0.78, 28 );
+    p = &band[ I_CHOIR ];   synth_patch( p, WAVE_TRIANGLE, 0.11, 16, 20, 0.78, 28 );
     synth_set_vibrato( p, 0.12, 4.0, 28 );
 
     // brass (horns / sax / oboe / synth brass) -- reedy saw
