@@ -14,6 +14,15 @@ pitch-slide drums, and a small step sequencer — all in one header, `synth.h`.
 
 ---
 
+## Documentation
+
+New here? Start with the **[tutorials](tutorials/)** (sound effects → music →
+custom instruments; each has a runnable ROM). For everything else:
+
+- **[docs/concepts.md](docs/concepts.md)** — how it works, ROM setup, hardware limits.
+- **[docs/api-reference.md](docs/api-reference.md)** — every function, type, constant.
+- **[CLAUDE.md](CLAUDE.md)** — engine internals & contributor notes.
+
 ## Files
 
 | File | Purpose |
@@ -22,6 +31,7 @@ pitch-slide drums, and a small step sequencer — all in one header, `synth.h`.
 | `tools/gen_waves.py` | Generates the wavetable WAVs (`sounds/wt_*.wav`). |
 | `demo.c` / `demo.xml` | The showcase: self-playing chiptune + live display + gamepad synth. |
 | `build.sh`         | Full pipeline: gen waves → compile → assemble → pack. |
+| `docs/` `tutorials/` | Reference docs and step-by-step guides (with runnable ROMs). |
 
 ## Build & run
 
