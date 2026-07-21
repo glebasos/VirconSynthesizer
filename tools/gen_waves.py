@@ -89,6 +89,22 @@ def build_noise():
     return out
 
 
+# Wavetable morph table for PWM: PWM_CYCLES full pulse periods concatenated,
+# duty sweeping from 50% down to ~6%. The synth plays it one cycle at a time by
+# moving the SPU loop window (set_sound_loop_start/end), sweeping the duty.
+PWM_CYCLES = 8
+
+def build_pwm_morph():
+    out = []
+    for k in range(PWM_CYCLES):
+        duty = 0.5 - (0.5 - 0.06) * (k / float(PWM_CYCLES - 1))
+        for i in range(PERIOD):
+            phase = i / float(PERIOD)
+            out.append(AMPLITUDE if phase < duty else -AMPLITUDE)
+    out.append(out[0])   # guard sample for a clean final loop
+    return out
+
+
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     print("Generating wavetables (period=%d, rate=%d Hz):" % (PERIOD, SAMPLE_RATE))
@@ -99,7 +115,8 @@ def main():
     write_wav("wt_pulse25",  single_cycle(osc_pulse25))
     write_wav("wt_pulse12",  single_cycle(osc_pulse12))
     write_wav("wt_noise",    build_noise())
-    print("Done. PERIOD constant for the C side = %d" % PERIOD)
+    write_wav("wt_pwm",      build_pwm_morph())
+    print("Done. PERIOD=%d, PWM_CYCLES=%d for the C side" % (PERIOD, PWM_CYCLES))
 
 
 if __name__ == "__main__":

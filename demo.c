@@ -394,7 +394,16 @@ void handle_manual_note( int i, int cur )
     int prev = btn_prev[ i ];
 
     if( cur > 0 && prev <= 0 )
-      btn_voice[ i ] = synth_note_on( synth_preset( manual_preset ), scale_notes[ i ], 1.0 );
+    {
+        if( manual_preset == PRESET_PLUCK_ECHO )
+        {
+            // fire-and-forget echo (no held voice to release)
+            synth_note_echo( synth_preset( manual_preset ), scale_notes[ i ], 1.0, 10 );
+            btn_voice[ i ] = -1;
+        }
+        else
+          btn_voice[ i ] = synth_note_on( synth_preset( manual_preset ), scale_notes[ i ], 1.0 );
+    }
     else if( cur <= 0 && prev > 0 )
     {
         if( btn_voice[ i ] >= 0 )

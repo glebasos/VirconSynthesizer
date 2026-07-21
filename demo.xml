@@ -11,5 +11,6 @@
         <sound path="obj/wt_pulse25.vsnd" />
         <sound path="obj/wt_pulse12.vsnd" />
         <sound path="obj/wt_noise.vsnd" />
+        <sound path="obj/wt_pwm.vsnd" />
     </sounds>
 </rom-definition>
