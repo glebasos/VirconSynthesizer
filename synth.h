@@ -50,7 +50,17 @@
 //   CONFIGURATION CONSTANTS
 // =============================================================================
 
-#define SYNTH_VOICES        16        // == SPU channels
+// SYNTH_VOICES / SYNTH_CHANNEL_BASE define the synth's SPU-channel window: its
+// voices map to channels [SYNTH_CHANNEL_BASE .. +SYNTH_VOICES). A host that also
+// uses the SPU for sound effects can hand the synth a sub-range and keep the
+// rest for sfx. Both are #ifndef-guarded so a consumer may #define them before
+// #include "synth.h"; the defaults (base 0, 16 voices) own the whole SPU.
+#ifndef SYNTH_VOICES
+#define SYNTH_VOICES        16        // synth voice count (<= 16 SPU channels)
+#endif
+#ifndef SYNTH_CHANNEL_BASE
+#define SYNTH_CHANNEL_BASE  0         // SPU channel of voice 0
+#endif
 #define SYNTH_WAVE_PERIOD   2048      // samples per single cycle (tools/gen_waves.py)
 #define SYNTH_RATE          44100     // SPU sampling rate
 #define SYNTH_FPS           60        // envelope tick rate
@@ -259,6 +269,7 @@ struct Instrument
 // =============================================================================
 
 int                   synth_wave_base;            // cartridge sound id of WAVE_SINE
+int                   synth_channel_base;          // SPU channel of voice 0 (window base)
 float                 synth_master;               // master volume 0..1
 int                   synth_transpose;            // global transpose in semitones
 int                   synth_cur_row_frames;       // last sequencer frames_per_row (for LFO sync)
@@ -324,6 +335,12 @@ float synth_rand01()
     return synth_rng / 2147483647.0;
 }
 
+// voice index -> SPU channel id (the synth owns a contiguous channel window)
+int synth_ch( int v )
+{
+    return synth_channel_base + v;
+}
+
 // =============================================================================
 //   INITIALISATION
 // =============================================================================
@@ -349,6 +366,7 @@ void synth_scheduler_clear()
 void synth_init( int wave_base_sound_id )
 {
     synth_wave_base      = wave_base_sound_id;
+    synth_channel_base   = SYNTH_CHANNEL_BASE;
     synth_master         = 0.85;
     synth_transpose      = 0;
     synth_cur_row_frames = 8;
@@ -374,7 +392,7 @@ void synth_init( int wave_base_sound_id )
         synth_v_amp[ v ]     = 0.0;
         synth_v_timer[ v ]   = SYNTH_NO_TIMER;
         synth_v_inst[ v ]    = (Instrument*)0;
-        stop_channel( v );
+        stop_channel( synth_ch( v ) );
     }
 
     set_global_volume( 1.0 );
@@ -498,12 +516,12 @@ int synth_note_on_channel( Instrument* inst, int note, float velocity, int v )
 
     // stop first: the SPU ignores an AssignedSound write on a non-stopped
     // channel, so a stolen (still-playing) voice would keep the old waveform.
-    stop_channel( v );
-    assign_channel_sound( v, synth_inst_sound( inst ) );
-    select_channel( v );
+    stop_channel( synth_ch( v ) );
+    assign_channel_sound( synth_ch( v ), synth_inst_sound( inst ) );
+    select_channel( synth_ch( v ) );
     set_channel_volume( 0.0 );
     set_channel_speed( base );
-    play_channel( v );
+    play_channel( synth_ch( v ) );
 
     return v;
 }
@@ -526,12 +544,12 @@ int synth_note_on_freq( Instrument* inst, float hz, float velocity )
     synth_v_freq[ v ] = hz;
     synth_morph_reset( inst );
 
-    stop_channel( v );
-    assign_channel_sound( v, synth_inst_sound( inst ) );
-    select_channel( v );
+    stop_channel( synth_ch( v ) );
+    assign_channel_sound( synth_ch( v ), synth_inst_sound( inst ) );
+    select_channel( synth_ch( v ) );
     set_channel_volume( 0.0 );
     set_channel_speed( base );
-    play_channel( v );
+    play_channel( synth_ch( v ) );
     return v;
 }
 
@@ -592,7 +610,7 @@ void synth_voice_kill( int v )
     synth_v_level[ v ]  = 0.0;
     synth_v_amp[ v ]    = 0.0;
     synth_v_timer[ v ]  = SYNTH_NO_TIMER;
-    stop_channel( v );
+    stop_channel( synth_ch( v ) );
 }
 
 void synth_all_notes_off()
@@ -903,7 +921,7 @@ void synth_update()
         }
 
         // -------- write to SPU --------
-        select_channel( v );
+        select_channel( synth_ch( v ) );
         set_channel_volume( amp );
         set_channel_speed( speed );
 
